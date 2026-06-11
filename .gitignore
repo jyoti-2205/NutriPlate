@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# Build output
+frontend/build/
+build/
+dist/
+
+# Logs & cache
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+frontend/node_modules/.cache/
+.eslintcache
+
+# IDE
+.vscode/
+.idea/
