@@ -1,5 +1,5 @@
 const express = require('express');
-const User = require('../models/User');
+const User = require('../models/user');
 const Food = require('../models/Food');
 const { normalizeFoodList } = require('../utils/normalizeFoodImage');
 const { assessFoodRisk } = require('../utils/healthCheck');
