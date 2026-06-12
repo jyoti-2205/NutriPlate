@@ -12,13 +12,20 @@ const dbConfig = {
 const db = mysql.createPool(dbConfig);
 
 async function initDatabase() {
-  const connection = await mysql.createConnection({
-    host: dbConfig.host,
-    user: dbConfig.user,
-    password: dbConfig.password
-  });
-  await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbConfig.database}\``);
-  await connection.end();
+  if (process.env.SKIP_DB_CREATE === 'true') return;
+
+  try {
+    const connection = await mysql.createConnection({
+      host: dbConfig.host,
+      user: dbConfig.user,
+      password: dbConfig.password
+    });
+    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbConfig.database}\``);
+    await connection.end();
+  } catch (error) {
+    // Cloud MySQL (Railway etc.) often pre-creates the database
+    console.log('Skipping CREATE DATABASE (using existing cloud database)');
+  }
 }
 
 module.exports = db;
