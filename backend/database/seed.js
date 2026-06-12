@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const db = require('../config/database');
 const { initDatabase } = require('../config/database');
-const user = require('../models/User');
+const user = require('../models/user');
 const Admin = require('../models/Admin');
 const Food = require('../models/Food');
 const Order = require('../models/Order');
