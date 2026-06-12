@@ -70,7 +70,7 @@ async function seedUsers() {
   const query = 'INSERT INTO users (name, cholesterol, sugar, password) VALUES (?, ?, ?, ?)';
 
   for (const user of sampleUsers) {
-    const existing = await User.findByEmail(user.name);
+    const existing = await user.findByEmail(user.name);
     if (!existing) {
       await db.execute(query, [user.name, user.cholesterol, user.sugar, hashedPassword]);
     }
@@ -92,7 +92,7 @@ async function seedAdmins() {
 
 async function runSeed() {
   await initDatabase();
-  await User.createTable();
+  await user.createTable();
   await Admin.createTable();
   await Food.createTable();
   await Order.createTable();

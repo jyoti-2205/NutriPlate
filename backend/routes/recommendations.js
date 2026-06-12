@@ -1,5 +1,5 @@
 const express = require('express');
-const User = require('../models/user');
+const user = require('../models/user');
 const Food = require('../models/Food');
 const { normalizeFoodList } = require('../utils/normalizeFoodImage');
 const { assessFoodRisk } = require('../utils/healthCheck');
@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/recommend/:userId', authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await user.findById(req.params.userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }

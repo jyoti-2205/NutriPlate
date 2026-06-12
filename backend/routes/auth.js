@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const user = require('../models/user');
 const { authMiddleware, JWT_SECRET } = require('../middleware/auth');
 const router = express.Router();
 
@@ -9,12 +9,12 @@ router.post('/register', async (req, res) => {
   try {
     const { name, cholesterol, sugar, password } = req.body;
     
-    const existingUser = await User.findByEmail(name);
+    const existingUser = await user.findByEmail(name);
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    const userId = await User.create({ name, cholesterol, sugar, password });
+    const userId = await user.create({ name, cholesterol, sugar, password });
     res.status(201).json({ message: 'User registered successfully', userId });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -37,12 +37,12 @@ router.put('/profile/:userId', authMiddleware, async (req, res) => {
       return res.status(400).json({ message: 'Cholesterol and sugar must be valid positive numbers' });
     }
 
-    const existing = await User.findById(userId);
+    const existing = await user.findById(userId);
     if (!existing) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const updated = await User.updateProfile(userId, { cholesterol: chol, sugar: sug });
+    const updated = await user.updateProfile(userId, { cholesterol: chol, sugar: sug });
     res.json({
       message: 'Profile updated successfully',
       user: updated
@@ -56,7 +56,7 @@ router.post('/login', async (req, res) => {
   try {
     const { name, password } = req.body;
     
-    const user = await User.findByEmail(name);
+    const user = await user.findByEmail(name);
     if (!user || !await bcrypt.compare(password, user.password)) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
