@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const user = require('../models/user');
+const User = require('../models/User');
 const { authMiddleware, JWT_SECRET } = require('../middleware/auth');
 const router = express.Router();
 
@@ -9,12 +9,12 @@ router.post('/register', async (req, res) => {
   try {
     const { name, cholesterol, sugar, password } = req.body;
     
-    const existingUser = await user.findByEmail(name);
+    const existingUser = await User.findByEmail(name);
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    const userId = await user.create({ name, cholesterol, sugar, password });
+    const userId = await User.create({ name, cholesterol, sugar, password });
     res.status(201).json({ message: 'User registered successfully', userId });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -37,12 +37,12 @@ router.put('/profile/:userId', authMiddleware, async (req, res) => {
       return res.status(400).json({ message: 'Cholesterol and sugar must be valid positive numbers' });
     }
 
-    const existing = await user.findById(userId);
+    const existing = await User.findById(userId);
     if (!existing) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const updated = await user.updateProfile(userId, { cholesterol: chol, sugar: sug });
+    const updated = await User.updateProfile(userId, { cholesterol: chol, sugar: sug });
     res.json({
       message: 'Profile updated successfully',
       user: updated
@@ -56,15 +56,15 @@ router.post('/login', async (req, res) => {
   try {
     const { name, password } = req.body;
     
-    const user = await user.findByEmail(name);
-    if (!user || !await bcrypt.compare(password, user.password)) {
+    const foundUser = await User.findByEmail(name);
+    if (!foundUser || !await bcrypt.compare(password, foundUser.password)) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '24h' });
+    const token = jwt.sign({ userId: foundUser.id }, JWT_SECRET, { expiresIn: '24h' });
     res.json({ 
       token, 
-      user: { id: user.id, name: user.name, cholesterol: user.cholesterol, sugar: user.sugar }
+      user: { id: foundUser.id, name: foundUser.name, cholesterol: foundUser.cholesterol, sugar: foundUser.sugar }
     });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });

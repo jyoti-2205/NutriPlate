@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const db = require('../config/database');
 const { initDatabase } = require('../config/database');
-const user = require('../models/user');
+const User = require('../models/User');
 const Admin = require('../models/Admin');
 const Food = require('../models/Food');
 const Order = require('../models/Order');
@@ -69,10 +69,10 @@ async function seedUsers() {
   const hashedPassword = await bcrypt.hash(SAMPLE_PASSWORD, 10);
   const query = 'INSERT INTO users (name, cholesterol, sugar, password) VALUES (?, ?, ?, ?)';
 
-  for (const user of sampleUsers) {
-    const existing = await user.findByEmail(user.name);
+  for (const sampleUser of sampleUsers) {
+    const existing = await User.findByEmail(sampleUser.name);
     if (!existing) {
-      await db.execute(query, [user.name, user.cholesterol, user.sugar, hashedPassword]);
+      await db.execute(query, [sampleUser.name, sampleUser.cholesterol, sampleUser.sugar, hashedPassword]);
     }
   }
   console.log(`Seeded ${sampleUsers.length} users (password: ${SAMPLE_PASSWORD})`);
@@ -92,7 +92,7 @@ async function seedAdmins() {
 
 async function runSeed() {
   await initDatabase();
-  await user.createTable();
+  await User.createTable();
   await Admin.createTable();
   await Food.createTable();
   await Order.createTable();

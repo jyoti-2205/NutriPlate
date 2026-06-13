@@ -1,5 +1,5 @@
 const express = require('express');
-const user = require('../models/user');
+const User = require('../models/User');
 const Food = require('../models/Food');
 const { normalizeFoodList } = require('../utils/normalizeFoodImage');
 const { assessFoodRisk } = require('../utils/healthCheck');
@@ -8,14 +8,14 @@ const router = express.Router();
 
 router.get('/recommend/:userId', authMiddleware, async (req, res) => {
   try {
-    const user = await user.findById(req.params.userId);
-    if (!user) {
+    const foundUser = await User.findById(req.params.userId);
+    if (!foundUser) {
       return res.status(404).json({ message: 'User not found' });
     }
 
     const foods = normalizeFoodList(await Food.getAll());
     const analyzed = foods.map((food) => {
-      const risk = assessFoodRisk(user, food);
+      const risk = assessFoodRisk(foundUser, food);
       return {
         ...food,
         isRisky: risk.isRisky,
@@ -27,7 +27,7 @@ router.get('/recommend/:userId', authMiddleware, async (req, res) => {
     const recommendations = analyzed.filter((food) => !food.isRisky);
 
     res.json({
-      userHealth: user,
+      userHealth: foundUser,
       recommendations,
       summary: {
         totalMenu: foods.length,
