@@ -21,6 +21,10 @@ app.use('/api', orderRoutes);
 
 async function startServer() {
   try {
+    const { getDbConnectionLabel, logDbConfig } = require('./config/database');
+    logDbConfig();
+    console.log(`Connecting to MySQL at ${getDbConnectionLabel()}`);
+
     await runSeed();
 
     const server = app.listen(PORT, () => {
