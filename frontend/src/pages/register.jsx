@@ -44,7 +44,7 @@ const Register = () => {
   return (
     <div className="auth-layout">
       <div className="auth-banner">
-        <h2>Join NutriPlate</h2>
+        <h2>Join SafeBite</h2>
         <p>Create your profile with health stats to get personalized food warnings while ordering.</p>
         <ul>
           <li>Track cholesterol &amp; sugar</li>

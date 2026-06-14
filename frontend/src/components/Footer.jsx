@@ -5,7 +5,7 @@ const Footer = () => (
   <footer className="site-footer">
     <div className="footer-inner">
       <div>
-        <strong className="footer-brand">NutriPlate</strong>
+        <strong className="footer-brand">SafeBite</strong>
         <span className="footer-tagline">Order smart, eat safe</span>
       </div>
       <div className="footer-links">
@@ -16,7 +16,7 @@ const Footer = () => (
         <Link to="/bmi">BMI Calculator</Link>
       </div>
     </div>
-    <p className="footer-copy">&copy; 2026 NutriPlate — Health-Aware Food Ordering</p>
+    <p className="footer-copy">&copy; 2026 SafeBite — Health-Aware Food Ordering</p>
   </footer>
 );
 

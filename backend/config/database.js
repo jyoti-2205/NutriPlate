@@ -60,12 +60,14 @@ function getDbConnectionLabel() {
 function logDbConfig() {
   const hasMysqlHost = Boolean(process.env.MYSQLHOST || process.env.DB_HOST);
   const hasMysqlUrl = Boolean(process.env.MYSQL_URL || process.env.DATABASE_URL);
+  const hasPassword = Boolean(dbConfig.password);
 
   console.log(`DB config -> host: ${dbConfig.host}, port: ${dbConfig.port}, database: ${dbConfig.database}, user: ${dbConfig.user}`);
-  console.log(`Env detected -> MYSQLHOST: ${hasMysqlHost ? 'yes' : 'no'}, MYSQL_URL: ${hasMysqlUrl ? 'yes' : 'no'}`);
 
-  if (!hasMysqlHost && !hasMysqlUrl) {
-    console.error('Missing database env vars. Link MySQL service variables on Railway (MYSQLHOST, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE, MYSQLPORT).');
+  if (process.env.RAILWAY_ENVIRONMENT && !hasMysqlHost && !hasMysqlUrl) {
+    console.error('Missing database env vars on Railway. Link MySQL service (MYSQLHOST, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE, MYSQLPORT).');
+  } else if (!process.env.RAILWAY_ENVIRONMENT && !hasPassword) {
+    console.error('Missing DB_PASSWORD. Create backend/.env — copy from backend/.env.example and set your MySQL password.');
   }
 }
 

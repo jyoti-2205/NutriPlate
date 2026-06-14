@@ -9,7 +9,7 @@ const Home = () => {
     <div>
       <section className="hero-section">
         <div className="hero-content">
-          <h1>NutriPlate</h1>
+          <h1>SafeBite</h1>
           <p>
             Order delicious meals with real-time health warnings based on your
             cholesterol, blood sugar, and BMI profile. Eat safe, order smart.

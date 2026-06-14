@@ -19,10 +19,10 @@ const Navbar = () => {
     <nav className="navbar">
       <Link to="/" className="brand">
         <div className="brand-logo" aria-hidden="true">
-          <span className="brand-logo-inner">N</span>
+          <span className="brand-logo-inner">S</span>
         </div>
         <div className="brand-text">
-          <span className="brand-title">NutriPlate</span>
+          <span className="brand-title">SafeBite</span>
           <span className="brand-subtitle">Smart Food Ordering</span>
         </div>
       </Link>

@@ -40,7 +40,7 @@ const AdminLogin = () => {
     <div className="auth-layout admin-auth-layout">
       <div className="auth-banner admin-banner">
         <h2>Admin Portal</h2>
-        <p>Authorized personnel only. Manage NutriPlate menu items from here.</p>
+        <p>Authorized personnel only. Manage SafeBite menu items from here.</p>
         <ul>
           <li>Add new food items</li>
           <li>Update menu &amp; prices</li>
@@ -77,7 +77,7 @@ const AdminLogin = () => {
             {loading ? 'Verifying...' : 'Enter Admin Panel'}
           </button>
           <p className="auth-footer-text">
-            <Link to="/">← Back to NutriPlate home</Link>
+            <Link to="/">← Back to SafeBite home</Link>
           </p>
         </form>
       </div>

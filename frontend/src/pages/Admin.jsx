@@ -100,7 +100,7 @@ const Admin = () => {
         badge="Admin"
         icon="⚙️"
         title="Manage Menu"
-        subtitle="Add or remove food items from the NutriPlate menu."
+        subtitle="Add or remove food items from the SafeBite menu."
       />
 
       <form className="card profile-edit-form admin-form" onSubmit={handleAdd}>

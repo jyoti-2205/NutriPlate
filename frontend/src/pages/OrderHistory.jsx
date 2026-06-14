@@ -49,7 +49,7 @@ const OrderHistory = () => {
         badge="Your Orders"
         icon="📦"
         title="Order History"
-        subtitle="All meals you have ordered through NutriPlate."
+        subtitle="All meals you have ordered through SafeBite."
       />
 
       {loading && <LoadingSpinner />}
